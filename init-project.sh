@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ─────────────────────────────────────────────────────────────
-# Bootstrap a new Claude-managed software project
+# Bootstrap a new AI-agent-managed software project
 #
 # Usage:
 #   ./init-project.sh <project-dir> [--ref <git-url-or-path>]
@@ -41,9 +41,27 @@ mkdir -p "$PROJECT_DIR"
 echo "Created project directory: $PROJECT_DIR"
 
 # ── Copy templates ──────────────────────────────────────────
-cp "$SCRIPT_DIR/CLAUDE.template.md" "$PROJECT_DIR/CLAUDE.md"
+cp "$SCRIPT_DIR/AGENTS.template.md" "$PROJECT_DIR/AGENTS.md"
 cp "$SCRIPT_DIR/PLAN.template.md"   "$PROJECT_DIR/PLAN.md"
-echo "Copied CLAUDE.md and PLAN.md templates"
+echo "Copied AGENTS.md and PLAN.md templates"
+
+# ── Create symlinks for tool compatibility ──────────────────
+# Claude Code reads CLAUDE.md, other tools read AGENTS.md
+cd "$PROJECT_DIR"
+ln -sf AGENTS.md CLAUDE.md
+mkdir -p .github
+ln -sf ../AGENTS.md .github/copilot-instructions.md
+echo "Created symlinks: CLAUDE.md, .github/copilot-instructions.md -> AGENTS.md"
+
+# ── Create .gitignore ──────────────────────────────────────
+cat > "$PROJECT_DIR/.gitignore" << 'GITIGNORE'
+# Personal agent overrides (not committed)
+CLAUDE.local.md
+
+# Reference implementation (not committed)
+_reference/
+GITIGNORE
+echo "Created .gitignore"
 
 # ── Initialize git ──────────────────────────────────────────
 if [[ ! -d "$PROJECT_DIR/.git" ]]; then
@@ -67,31 +85,29 @@ if [[ -n "$REF_SOURCE" ]]; then
         exit 1
     fi
 
-    # Add reference path to CLAUDE.md
-    sed -i '' "s|<!-- link or \"N/A\" -->|_reference/source/|" "$PROJECT_DIR/CLAUDE.md"
+    # Add reference path to AGENTS.md
+    sed -i '' "s|<!-- link or \"N/A\" -->|_reference/source/|" "$PROJECT_DIR/AGENTS.md"
 
     # Add reference info to PLAN.md
     sed -i '' "s|- \*\*Source repo/docs\*\*:|- \*\*Source repo/docs\*\*: $REF_SOURCE|" "$PROJECT_DIR/PLAN.md"
 
-    # Prevent accidentally committing the reference source into the new project
-    echo "_reference/" >> "$PROJECT_DIR/.gitignore"
-
     echo "Reference implementation stored in: $REF_DIR/source/"
-    echo "Added _reference/ to .gitignore"
 fi
 
 # ── Summary ─────────────────────────────────────────────────
 echo ""
 echo "── Project bootstrapped ──────────────────────────────"
-echo "  Directory : $PROJECT_DIR"
-echo "  CLAUDE.md : $PROJECT_DIR/CLAUDE.md"
-echo "  PLAN.md   : $PROJECT_DIR/PLAN.md"
+echo "  Directory  : $PROJECT_DIR"
+echo "  AGENTS.md  : $PROJECT_DIR/AGENTS.md  (canonical)"
+echo "  CLAUDE.md  : $PROJECT_DIR/CLAUDE.md  (symlink)"
+echo "  Copilot    : $PROJECT_DIR/.github/copilot-instructions.md (symlink)"
+echo "  PLAN.md    : $PROJECT_DIR/PLAN.md"
 if [[ -n "$REF_SOURCE" ]]; then
-echo "  Reference : $PROJECT_DIR/_reference/source/"
+echo "  Reference  : $PROJECT_DIR/_reference/source/"
 fi
 echo ""
 echo "Next steps:"
 echo "  1. Fill in PLAN.md with your objective and feature list"
-echo "  2. Fill in the Project Info and Commands sections of CLAUDE.md"
-echo "  3. Start Claude Code in the project directory"
+echo "  2. Fill in the Project Info, Tech Stack, and Commands sections of AGENTS.md"
+echo "  3. Start your AI coding agent in the project directory"
 echo "───────────────────────────────────────────────────────"

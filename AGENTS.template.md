@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 ## Workflow Rules
 
@@ -55,6 +55,7 @@ Every feature added to the codebase **must** have tests before it is marked `don
 - **UI/integration tests** for user-facing features (browser-based, CLI output, API responses).
 - Tests must be runnable with a single command documented in the "Commands" section below.
 - A feature is not complete until its tests pass in CI or local test runner.
+- **Tests are assumed correct.** If the implementation fails a test, fix the implementation — not the test. If a test repeatedly fails after genuine implementation attempts, the test may be replaced, but explain why the original test was wrong and what the replacement covers.
 
 ### 4. General Coding Standards
 
@@ -67,19 +68,43 @@ Every feature added to the codebase **must** have tests before it is marked `don
 ## Project Info
 
 - **Name**:
-- **Language/Stack**:
+- **Language/Stack**: <!-- Pin versions, e.g. "Python 3.12, Flask 3.0, SQLAlchemy 2.0" -->
 - **Reference implementation**: <!-- link or "N/A" -->
+
+## Tech Stack
+
+<!-- Pin exact versions to prevent compatibility drift. -->
+
+| Component | Version |
+|-----------|---------|
+| Language | |
+| Framework | |
+| Test framework | |
+| Package manager | |
+| Linter/formatter | |
 
 ## Commands
 
 ```bash
+# Install dependencies
+# TODO
+
 # Run the project
 # TODO
 
-# Run tests
+# Run all tests
 # TODO
 
-# Lint / format
+# Run a single test file
+# TODO <path/to/test_file>
+
+# Lint
+# TODO
+
+# Format
+# TODO
+
+# Build for production
 # TODO
 ```
 
@@ -88,3 +113,38 @@ Every feature added to the codebase **must** have tests before it is marked `don
 ```
 # TODO — fill in after initial scaffolding
 ```
+
+## Code Style
+
+<!-- Show, don't tell. Provide real code examples of the conventions used in this project. -->
+
+### Preferred
+
+```
+# TODO — add a short code example showing the project's conventions
+```
+
+### Avoid
+
+```
+# TODO — add a short code example showing what NOT to do
+```
+
+## Boundaries
+
+### Always
+- Run tests before marking a feature done
+- Include types/annotations where the language supports them
+- Use the project's existing patterns — match what's already there
+
+### Ask First
+- Adding new dependencies or packages
+- Changing database schema or data models
+- Architectural changes that affect multiple modules
+- Deleting or renaming public APIs
+
+### Never
+- Commit secrets, credentials, API keys, or .env files
+- Modify CI/CD pipelines without explicit approval
+- Skip tests to "save time"
+- Rewrite working code for style preferences alone

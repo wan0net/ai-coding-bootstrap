@@ -57,10 +57,17 @@ Every feature added to the codebase **must** have tests before it is marked `don
 - A feature is not complete until its tests pass in CI or local test runner.
 - **Tests are assumed correct.** If the implementation fails a test, fix the implementation — not the test. If a test repeatedly fails after genuine implementation attempts, the test may be replaced, but explain why the original test was wrong and what the replacement covers.
 
-### 4. General Coding Standards
+### 4. Git Workflow
+
+- **Initialize git immediately.** The first thing you do in a new project is `git init` and commit the scaffolding (AGENTS.md, PLAN.md, project skeleton). Every feature builds on a committed baseline.
+- **Commit after every feature.** When a feature's implementation and tests are passing, commit it before moving to the next feature. One feature = one commit. This creates a clean rollback point for each feature.
+- **Commit message format:** Start with the feature number from PLAN.md, e.g. `#3: Add user authentication endpoint`
+- Do not batch multiple features into a single commit.
+- Do not leave uncommitted work when starting the next feature.
+
+### 5. General Coding Standards
 
 - Do not skip ahead or "stub out" future features. Implement fully or not at all.
-- Prefer small, focused commits — one feature or fix per commit.
 - Do not add dependencies without checking PLAN.md first. If a new dependency is needed, log it.
 
 ---

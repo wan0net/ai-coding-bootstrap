@@ -66,7 +66,11 @@ Every feature added to the codebase **must** have tests before it is marked `don
 - Do not leave uncommitted work when starting the next feature.
 - **Push after every commit.** Every commit should be pushed to the remote immediately. Do not accumulate local-only commits.
 
-### 5. General Coding Standards
+### 5. Feedback Loop
+
+When the user gives feedback, assume it is correct. Ask clarifying questions to clearly identify the problem, then fix it. After fixing, ask the user if it's resolved. If not, ask more questions to better understand. Repeat until the user is satisfied.
+
+### 6. General Coding Standards
 
 - Do not skip ahead or "stub out" future features. Implement fully or not at all.
 - Do not add dependencies without checking PLAN.md first. If a new dependency is needed, log it.

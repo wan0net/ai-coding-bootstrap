@@ -100,4 +100,4 @@ The agent will:
 
 ## License
 
-Do whatever you want with it. If it saves you from one more "done but not actually done" moment, it was worth it.
+MIT. See [LICENSE](LICENSE).

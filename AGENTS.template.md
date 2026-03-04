@@ -64,6 +64,7 @@ Every feature added to the codebase **must** have tests before it is marked `don
 - **Commit message format:** Start with the feature number from PLAN.md, e.g. `#3: Add user authentication endpoint`
 - Do not batch multiple features into a single commit.
 - Do not leave uncommitted work when starting the next feature.
+- **Push after every commit.** Every commit should be pushed to the remote immediately. Do not accumulate local-only commits.
 
 ### 5. General Coding Standards
 

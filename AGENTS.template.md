@@ -28,6 +28,11 @@ You may batch these into logical groups rather than asking all at once. Adapt yo
 ### 1. Plan-Driven Development
 
 - **PLAN.md is the source of truth.** Read it before starting any work.
+- **Break the plan into context-window-sized chunks.** Each feature or task in PLAN.md must be scoped so it can be fully implemented, tested, and committed within a single focused session without losing critical context. As a rule of thumb:
+  - A single feature should not require reading more than ~10–15 files to implement.
+  - If a feature would require holding too much context at once (large reference code, many interdependencies, complex state), split it into sub-tasks in PLAN.md before starting.
+  - Prefer many small, well-scoped features over a few large ones. "Add user model", "Add user endpoints", and "Add user auth" are better than "Add user system".
+  - If you find yourself losing track of earlier context mid-feature, STOP. Commit what is done, record your state in PLAN.md, and start a fresh session for the remainder.
 - Work through features in the order listed. Finish an item completely (implemented + tests passing) before moving to the next.
 - **Exception — discovered dependencies:** If implementing feature N reveals an unplanned dependency, STOP.
   1. Add the dependency to the "Discovered Dependencies" table in PLAN.md.
